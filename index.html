@@ -1,0 +1,556 @@
+<!doctype html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+
+    <title>jicbioimage presentation</title>
+
+    <meta name="description" content="The jicbioimage Python package makes it easy to explore microscopy data in a programmatic fashion.">
+    <meta name="author" content="Tjelvar Olsson">
+
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+
+    <link rel="stylesheet" href="reveal.js/css/reveal.css">
+    <link rel="stylesheet" href="reveal.js/css/theme/black.css" id="theme">
+
+    <!-- Code syntax highlighting -->
+    <link rel="stylesheet" href="reveal.js/lib/css/zenburn.css">
+
+    <!-- Printing and PDF exports -->
+    <script>
+      var link = document.createElement( 'link' );
+      link.rel = 'stylesheet';
+      link.type = 'reveal.js/text/css';
+      link.href = window.location.search.match( /print-pdf/gi ) ? 'reveal.js/css/print/pdf.css' : 'reveal.js/css/print/paper.css';
+      document.getElementsByTagName( 'head' )[0].appendChild( link );
+    </script>
+
+    <!--[if lt IE 9]>
+    <script src="reveal.js/lib/js/html5shiv.js"></script>
+    <![endif]-->
+  </head>
+
+  <body>
+
+    <div class="reveal">
+
+      <div class="slides">
+        <section>
+          <h1>jicbioimage</h1>
+          <h3>Automating bioimage analysis</h3>
+          <p>
+            <small>Created by <a href="http://tjelvarolsson.com">Tjelvar Olsson</a> / <a href="http://twitter.com/tjelvar_olsson">@tjelvar_olsson</a></small>
+          </p>
+        </section>
+
+        <section>
+          <h2>Acknowledgements</h2>
+          <div>
+            <ul>
+              <li>Matthew Hartley</li>
+              <li>Marielle Vigouroux</li>
+              <li>Matthew Couchman</li>
+              <li>Grant Calder</li>
+            </ul>
+            <div style="float:right;">
+              <small>
+              <ul>
+                <li>Scott Berry &amp; Martin Howard</li>
+                <li>Susan Duncan &amp; Stafanie Rosa</li>
+                <li>Hugh Woolfenden &amp; Michaela Kopischke</li>
+                <li>Xiaoqi Feng &amp; Billy Aldridge</li>
+                <li>Cecila Cheval</li>
+                <li>Jordi Chan</li>
+                <li>Xana Verweij</li>
+                <li>Amelia Frizell-Armitage</li>
+              </ul>
+              </small>
+            </div>
+          <div>
+        </section>
+
+        <section>
+          <h2>Information content</h2>
+
+          <img height="360" data-src="images/microscopy_image.png" alt="Microscopy image" />
+          <img height="360" data-src="images/shakespeares_first_folio_1623.jpg" alt="Title page of the First Folio, 1623. Copper engraving of Shakespeare by Martin Droeshout." />
+
+          <p>
+            <small>
+              <ul>
+                <li>Cells stained for nuclear membrane (blue) and PP2A RNA molecules (red). Susan Duncan and Stefanie Rosa. Used with permission.</li>
+                <li>Title page of the First Folio, 1623. Copper engraving of Shakespeare by Martin Droeshout. Public domain.</li>
+              </ul>
+            </small>
+          </p>
+
+          <aside class="notes">
+            <blockquote cite="http://searchstorage.techtarget.com/definition/How-many-bytes-for">
+            The complete works of Shakespeare can be fit into 5 megabytes.
+            </blockquote>
+          </aside>
+
+        </section>
+
+        <section>
+          <h2>Can your brain process it all?</h2>
+          <img height="400" data-src="images/too_much_information.jpg" alt="Too much information" />
+
+          <p>
+            <small>
+              <ul>
+                <li>
+                &copy; Too Much Information, 2003, by Astronomy Humor.
+                Creative Commons <a href="https://creativecommons.org/licenses/by-sa/2.0/">[CC BY-SA 2.0]</a>.
+                <a href="https://www.flickr.com/photos/cristinadellarosa/5300628317">flickr.com/photos/cristinadellarosa/5300628317</a>
+                </li>
+              </ul>
+            </small>
+          </p>
+        </section>
+
+        <section>
+          <h2>Can you believe your eyes?</h2>
+          <img data-src="images/checkershadow_illusion4med.jpg" alt="Checker-shadow illusion" />
+          <p>
+            <small>
+              <ul>
+                <li>
+                &copy; 1995, Edward H. Adelson. These checkershadow images may be reproduced and distributed freely.
+                <a href="http://web.mit.edu/persci/people/adelson/checkershadow_illusion.html">web.mit.edu/persci/people/adelson/checkershadow_illusion.html</a>
+                </li>
+              </ul>
+            </small>
+          </p>
+        </section>
+
+        <section>
+          <h2>Yes, they really are the same</h2>
+          <img data-src="images/checkershadow_proof4med.jpg" alt="Checker-shadow proof" />
+          <p>
+            <small>
+              <ul>
+                <li>
+                &copy; 1995, Edward H. Adelson. These checkershadow images may be reproduced and distributed freely.
+                <a href="http://web.mit.edu/persci/people/adelson/checkershadow_illusion.html">web.mit.edu/persci/people/adelson/checkershadow_illusion.html</a>
+                </li>
+              </ul>
+            </small>
+          </p>
+        </section>
+
+
+        <section>
+          <h2>Image analysis definition</h2>
+          <img data-src="images/coins_raw.png" alt="Coins" />
+          <img data-src="images/coins_augmented.png" alt="Coins augmented" />
+          <p>Transforming images into quantitative data</p>
+          <aside class="notes">
+            <blockquote cite="https://en.wikipedia.org/wiki/Image_analysis">
+            Image analysis is the extraction of meaningful information from images.
+            </blockquote>
+          </aside>
+        </section>
+
+        <section>
+          <h2>Image analysis Swiss army knife</h2>
+          <img data-src="images/fiji.png" alt="Fiji" />
+          <aside class="notes">
+            <ul>
+              <li>Complex and unintuitive</li>
+              <li>There is no undo or history</li>
+            </ul>
+          </aside>
+        </section>
+
+        <section>
+          <h2>Reproducible science?</h2>
+          <aside class="notes">
+            <ul>
+              <li>Difficult to understand what the buttons actually do to the image</li>
+              <li>Prone to update itself during the life-time of a project</li>
+              <li>Can you remember all the steps and settings used in the analysis?</li>
+            </ul>
+          </aside>
+        </section>
+
+        <section>
+          <h2>Too much button clicking?</h2>
+          <img height="400px" data-src="images/computer_workstation_variables.png" alt="RSI" />
+          <p>
+            <small>
+              <ul>
+                <li>
+                &copy; 2013, Yamavu. Creative Commons [CC0]. <a href="https://commons.wikimedia.org/wiki/File%3AComputer_Workstation_Variables_cleanup.png">commons.wikimedia.org/wiki/File%3AComputer_Workstation_Variables_cleanup.png</a>
+                </li>
+              <ul>
+            </small>
+          </p>
+        </section>
+
+        <section data-background="#96483a" data-background-transition="zoom">
+          <h2>Overall workflow</h2>
+          <table>
+            <thead>
+              <tr>
+                <th>Visualisation</th>
+                <th>Exploration</th>
+                <th>Automation</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>What does the data look like?</td>
+                <td>How can we transform the data into quantitative measurements?</td>
+                <td>How can we minimise the number of button clicks?</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+            </thead>
+            </tbody>
+          </table>
+
+          <aside class="notes">
+            <ul>
+              <li>Initially, we tried to do all three stages using Fiji</li>
+              <li>However, we ran into trouble when trying to write macros in Fiji and running them in headless mode</li>
+              <li>We therefore turned to our favourite scripting language</li>
+            </ul>
+          </aside>
+        </section>
+
+        <section>
+          <h2>Python</h2>
+          <pre><code class="python" data-trim>
+def quality(language):
+    "Return subjective quality of the language."
+    if language == "python":
+        return "good"
+    return "suboptimal"
+
+for l in ["perl", "php", "python"]:
+    q = quality(l)
+    print("{} is {}".format(l, q))
+          </code></pre>
+
+          <aside class="notes">
+            <ul>
+              <li>Python is becoming increasingly popular for scientific computing</li>
+              <li>It even has advocates in the bioinformatics community</li>
+              <li>However, there is little support for working with microscopy images</li>
+            </ul>
+          </aside>
+        </section>
+
+        <section>
+          <h2>Python Image Analysis</h2>
+
+          <pre><code class="python" data-trim>
+from skimage import data, filter
+
+image = data.coins()
+edges = filter.sobel(image)
+          </code></pre>
+
+          <img data-src="images/coins_raw.png" alt="Coins" />
+          <img data-src="images/coins_edges.png" alt="Coins edges" />
+
+          <aside class="notes">
+            <ul>
+              <li>There are also a number of image analysis packages for Python</li>
+              <li>One that we make much use of is scikit image</li>
+              <li>However, there is little support for working with microscopy images</li>
+            </ul>
+          </aside>
+        </section>
+
+        <section>
+          <h2>Open Microscopy Environment</h2>
+          
+          <blockquote cite="http://www.openmicroscopy.org/site/products/bio-formats">
+           &ldquo;Bio-Formats, the solution for reading proprietary microscopy image data and metadata.&rdquo;
+          </blockquote>
+
+          <aside class="notes">
+            <ul>
+              <li>Bio-Formats is a software tool for reading and writing image data using standardized, open formats</li>
+              <li>Bio-Formats is developed by the Open Microscopy Environment consortium</li>
+            </ul>
+          </aside>
+        </section>
+
+        <section>
+          <h2>Bio-Formats integration</h2>
+          <pre><code class="python" data-trim>
+from jicbioimage.core.image import DataManager
+
+# Load the data from the file "col0_root.lif".
+data_manager = DataManager()
+microscopy_collection = data_manager.load("col0_root.lif")
+
+# Get a numpy.ndarray zstack of the data from series 1, channel 2.
+zstack = microscopy_collection.zstack_array(s=1, c=2)
+          </code></pre>
+
+          <aside class="notes">
+            <ul>
+              <li>Implemented a thin wrapper around BioFormats bfconvert command line tool</li>
+              <li>Created a data structure that was microscopy aware</li>
+            </ul>
+          </aside>
+        </section>
+
+        <section data-background="#de8e33" data-background-transition="zoom">
+          <h2>Overall workflow</h2>
+          <table>
+            <thead>
+              <tr>
+                <th>Visualisation</th>
+                <th>Exploration</th>
+                <th>Automation</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>What does the data look like?</td>
+                <td>How can we transform the data into quantitative measurements?</td>
+                <td>How can we minimise the number of button clicks?</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td><img data-src="images/python_logo.png" alt="Python logo" /></td>
+              </tr>
+            </thead>
+            </tbody>
+          </table>
+
+          <aside class="notes">
+            <ul>
+              <li>Now able to automate image analysis using Python</li>
+              <li>However, at this stage we were still doing the data exploration using Fiji</li>
+              <li>This resulted in a lot of duplicated work</li>
+              <li>We wanted a way to be able to explore the data using Python</li>
+              <li>For this we needed a means to reduce the iteration cycle times when making changes to analysis</li>
+            </ul>
+          </aside>
+        </section>
+
+        <section>
+          <h2>Creating image transforms</h2>
+          <pre><code class="python" data-trim>
+import numpy as np
+from jicbioimage.core.transform import transformation
+
+@transformation
+def invert(image):
+    "Return an inverted image."
+    max = np.iinfo(image.dtype).max
+    max_array = np.ones(image.shape, dtype=image.dtype) * max
+    return max_array - image
+          </code></pre>
+
+          <img data-src="images/coins_inverted.png" alt="Coins edges" />
+
+          <aside class="notes">
+            <ul>
+              <li>We therefore created a transformation function decorator</li>
+              <li>A function decorator has access to the input and output of a function</li>
+              <li>Use it to save the resulting image as a PNG</li>
+              <li>Use it to log the transformation details in the resulting image object</li>
+            </ul>
+          </aside>
+        </section>
+
+        <section>
+          <h2>Transform decorator benefits</h2>
+          <ul>
+            <li>Rapid iteration cycles</li>
+            <li>Quick visual debugging</li>
+            <li>Audit trail</li>
+          </ul>
+        </section>
+
+
+        <section>
+          <h2>RNA fish probe counting background image</h2>
+        </section>
+
+        <section>
+          <h2>List of images produced by transforms in RNA fish probe counting example</h2>
+        </section>
+      
+
+        <section>
+          <h2>Stomate opening workflow background image</h2>
+        </section>
+
+
+        <section>
+          <h2>Repository of transforms</h2>
+
+          <pre><code class="python" data-trim>
+from jicbioimage.transform import (
+    equalize_adaptive_clahe,
+    smooth_gaussian,
+    threshold_otsu
+)
+
+image = equalize_adaptive_clahe(image)
+image = smooth_gaussian(image)
+image = threshold_otsu(image)
+          </code></pre>
+
+          <img data-src="images/coins_thresholded.png" alt="Coins thresholded" />
+
+          <aside class="notes">
+            <ul>
+              <li>Noticed that we spent a lot of time generating custom code for dealing with segmentations</li>
+            </ul>
+          </aside>
+        </section>
+
+        <section>
+          <h2>Working with segmentations</h2>
+
+          <pre><code class="python" data-trim>
+from jicbioimage.segment import connected_components
+
+segmentation = connected_components(image, background=0)
+          </code></pre>
+
+          <img data-src="images/coins_segmented.png" alt="Coins thresholded" />
+
+        </section>
+
+        <section>
+          <h2>IPython integration</h2>
+          <p>Live demo...</p>
+        </section>
+
+        <section data-background="#52918c" data-background-transition="zoom">
+          <h2>Overall workflow</h2>
+          <table>
+            <thead>
+              <tr>
+                <th>Visualisation</th>
+                <th>Exploration</th>
+                <th>Automation</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>What does the data look like?</td>
+                <td>How can we transform the data into quantitative measurements?</td>
+                <td>How can we minimise the number of button clicks?</td>
+              </tr>
+              <tr>
+                <td><img data-src="images/python_logo.png" alt="Python logo" /></td>
+                <td><img data-src="images/python_logo.png" alt="Python logo" /></td>
+                <td><img data-src="images/python_logo.png" alt="Python logo" /></td>
+              </tr>
+            </thead>
+            </tbody>
+          </table>
+
+          <aside class="notes">
+            <ul>
+              <li>We can now use Python in all three stages</li>
+            </ul>
+          </aside>
+        </section>
+
+        <section>
+          <h2>Open source ecosystem</h2>
+          <ul>
+            <li>Documentation: <a href="http://jicbioimage.readthedocs.org/">jicbioimage.readthedocs.org/</a></li>
+            <li>Linux CI testing on <a href="https://travis-ci.org/">Travic CI</a></li>
+            <li>Windows CI testing on <a href="https://ci.appveyor.com/">AppVeyor</a></li>
+            <li>Installable via <a href="https://pypi.python.org/pypi">PyPi</a></li>
+            <li>Source code: <a href="https://github.com/JIC-CSB/jicbioimage">github.com/JIC-CSB/jicbioimage</a></li>
+            <li>Free software: <a href="https://opensource.org/licenses/MIT">MIT licence</a></li>
+          </ul>
+
+          <aside class="notes">
+            <ul>
+              <li>This project was born out of necessity</li>
+              <li>We rely on it so we take it seriously</li>
+              <li>The people we support rely on it so we need to ensure that we do not break it</li>
+              <li>The people we support use Windows, Mac and Linux</li> 
+              <li>It needs to be easy to install</li>
+              <li>The open source ecosystem helps us fulfil these requirements</li>
+            </ul>
+          </aside>
+        </section>
+
+        <section data-background="#ddd" data-background-transition="zoom">
+          <h2>Scripting is not for everyone</h2>
+          <img data-src="images/computer_problem.png" alt="Scripting is not for everyone" />
+          <p>
+            <small>
+              <ul>
+                <li>
+                &copy; 2013, OpenClipartVectors. Creative Commons [CC0].
+                <a href="https://pixabay.com/en/computer-problem-computer-problem-152211/">pixabay.com/en/computer-problem-computer-problem-152211/</a>
+                </li>
+              <ul>
+            </small>
+          </p>
+        </section>
+
+        <section>
+          <h2>The SciComp team can help</h2>
+          <img height="400" data-src="images/we_can_do_it.jpg" alt="We can do it!" />
+          <p>
+            <small>
+              <ul>
+                <li>
+                J. Howard Miller, artist employed by Westinghouse, 1942. This work is in the public domain.
+                <a href="https://en.wikipedia.org/wiki/File:We_Can_Do_It!.jpg">en.wikipedia.org/wiki/File:We_Can_Do_It!.jpg</a>
+                </li>
+              <ul>
+            </small>
+          </p>
+        </section>
+
+      </div>
+
+    </div>
+
+    <script src="reveal.js/lib/js/head.min.js"></script>
+    <script src="reveal.js/js/reveal.js"></script>
+
+    <script>
+
+      // Full list of configuration options available at:
+      // https://github.com/hakimel/reveal.js#configuration
+      Reveal.initialize({
+        controls: true,
+        progress: true,
+        history: true,
+        center: true,
+
+        transition: 'slide', // none/fade/slide/convex/concave/zoom
+
+        // Optional reveal.js plugins
+        dependencies: [
+          { src: 'reveal.js/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+          { src: 'reveal.js/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+          { src: 'reveal.js/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+          { src: 'reveal.js/plugin/highlight/highlight.js', async: true, condition: function() { return !!document.querySelector( 'pre code' ); }, callback: function() { hljs.initHighlightingOnLoad(); } },
+          { src: 'reveal.js/plugin/zoom-js/zoom.js', async: true },
+          { src: 'reveal.js/plugin/notes/notes.js', async: true }
+        ]
+      });
+
+    </script>
+
+  </body>
+</html>
