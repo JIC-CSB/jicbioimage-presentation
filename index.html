@@ -50,12 +50,7 @@
         <section>
           <h2>Acknowledgements</h2>
           <div>
-            <ul>
-              <li>Matthew Hartley</li>
-              <li>Marielle Vigouroux</li>
-              <li>Matthew Couchman</li>
-              <li>Grant Calder</li>
-            </ul>
+            <img style="margin: 0;" height="360" data-src="images/microscopy_image.png" alt="Microscopy image" />
             <div style="float:right;">
               <small>
               <ul>
@@ -63,14 +58,15 @@
                 <li>Susan Duncan &amp; Stefanie Rosa</li>
                 <li>Hugh Woolfenden &amp; Michaela Kopischke</li>
                 <li>Xiaoqi Feng &amp; Billy Aldridge</li>
-                <li>Cecila Cheval</li>
+                <li>Cecila Cheval &amp; Christine Faulkner</li>
+                <li>Amelia Frizell-Armitage</li>
                 <li>Jordi Chan</li>
                 <li>Xana Verweij</li>
-                <li>Amelia Frizell-Armitage</li>
+                <li>Alison Smith &amp; Marilyn Pike</li>
               </ul>
               </small>
             </div>
-          <div>
+          </div>
         </section>
 
         <section>
@@ -389,6 +385,21 @@ def invert(image):
           </div>
         </section>
 
+        <section>
+          <h2>Example of resulting images</h2>
+
+          <pre><code class="bash" data-trim>
+$ ls
+basic_segmentation.py
+$ python basic_segmentation.py
+$ ls
+1_equalize_adaptive_clahe.png
+2_smooth_gaussian.png
+3_threshold_otsu.png
+basic_segmentation.py
+          </code></pre>
+        </section>
+
         <section data-background="images/rna_fish_probe_counting.png" data-background-size="contain" data-background-transition="zoom">
         </section>
 
@@ -471,6 +482,19 @@ segmentation = connected_components(image, background=0)
         </section>
 
         <section>
+          <h2>Conclusion</h2>
+          <ul>
+            <li>
+              We have developed a framework for creating <em>automated</em> and
+              <em>reproducible</em> image analysis work flows
+            </li>
+            <li>It enables rapid iteration cycles during the exploratory phase of a project</li>
+            <li>Exploratory work can easily be converted into tools for use by experimental biologists</li> 
+            <li>In 2015 the framework has been used in 10+ projects</li> 
+          </ul>
+        </section>
+
+        <section>
           <h2>Open source ecosystem</h2>
           <ul>
             <li>Documentation: <a href="http://jicbioimage.readthedocs.org/">jicbioimage.readthedocs.org/</a></li>
@@ -493,19 +517,14 @@ segmentation = connected_components(image, background=0)
           </aside>
         </section>
 
-        <section data-background="#ddd" data-background-transition="zoom">
-          <h2>Scripting is not for everyone</h2>
-          <img data-src="images/computer_problem.png" alt="Scripting is not for everyone" />
-          <p>
-            <small>
-              <ul>
-                <li>
-                &copy; 2013, OpenClipartVectors. Creative Commons [CC0].
-                <a href="https://pixabay.com/en/computer-problem-computer-problem-152211/">pixabay.com/en/computer-problem-computer-problem-152211/</a>
-                </li>
-              <ul>
-            </small>
-          </p>
+        <section>
+          <h2>Acknowledgements</h2>
+          <ul>
+            <li>Matthew Hartley</li>
+            <li>Marielle Vigouroux</li>
+            <li>Matthew Couchman</li>
+            <li>Grant Calder</li>
+          </ul>
         </section>
 
         <section>
